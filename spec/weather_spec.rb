@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Weather do
-  before(:context) do
+  before do
     stub_request(:get, 'https://www.metaweather.com/api/location/search/?query=moscow')
       .to_return(
         body: '[{"title":"Moscow","location_type":"City","woeid":2122265,"latt_long":"55.756950,37.614971"}]',
