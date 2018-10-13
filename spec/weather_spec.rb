@@ -5,20 +5,19 @@ RSpec.describe Weather do
     expect(Weather::VERSION).not_to be nil
   end
 
-  it 'returns weather', :focus do
-    stub_request(:get, 'https://www.metaweather.com/api/location/search/?query=moscow')
-      .with(
-        headers: {
-          'Accept': '*/*',
-          'Accept-Encoding': 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent': 'Ruby'
-        }
+  describe 'weather' do
+    it 'returns weather' do
+      stub_request(:get, 'https://www.metaweather.com/api/location/search/?query=moscow')
+        .to_return(
+          body: '[{"title":"Moscow","location_type":"City","woeid":2122265,"latt_long":"55.756950,37.614971"}]',
       )
-      .to_return(
-        status: 200,
-        body: '[{"title":"Moscow","location_type":"City","woeid":2122265,"latt_long":"55.756950,37.614971"}]',
-        headers: {}
-      )
-    expect(Weather::Weather.get_weather_in_city('moscow')).to eq('woeid: 2122265')
+      expect(Weather::Weather.get_weather_in_city('moscow')).to eq('woeid: 2122265')
+    end
+  end
+
+  describe 'cli' do
+    it 'returns weather', :focus do
+      expect(Weather::CLI.weather('moscow')).to output('woeid: 2122265').to_stdout
+    end
   end
 end

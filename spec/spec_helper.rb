@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'weather'
+require 'weather/cli'
 require 'webmock/rspec'
 
 RSpec.configure do |config|
