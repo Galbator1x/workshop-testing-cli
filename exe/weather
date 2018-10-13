@@ -1,3 +1,4 @@
 #!/usr/bin/env ruby
 require 'weather/cli'
+require 'weather'
 Weather::CLI.start
